@@ -1,0 +1,15 @@
+export const HOME = '/';
+export const LOGIN = '/login';
+export const CREARCUENTA = '/crear-cuenta';
+export const MY = '/my';
+export const LOGOUT = '/my/logout';
+export const TUTORIAS = '/my/tutorias';
+export const NEWTUTORIA='/my/new-tutoria';
+export const ADMIN = '/my/perfil';
+export const NEWUSER = '/my/new-user';
+export const EDITUSER = '/my/edit-user';
+export const CONSULTAR = '/my/consultar';
+export const SOLICITAR = '/my/solicitar';
+export const DASHBOARD = '/my/dashboard';
+export const VALIDATION = '/validation'
+export const NOTFOUND = '*';
