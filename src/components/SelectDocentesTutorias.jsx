@@ -6,7 +6,12 @@ const URL_BACKEND_DOCENTE = "http://127.0.0.1:5000/usuario/find_usuario";
 const URL_BACKEND_GET_TUTORIAS = "http://127.0.0.1:5000/tutoria/find_tutoria";
 const token = window.localStorage.getItem("token");
 
-export default function SelectDocentesTutorias({ data, setDataDocente, handleInputChange }) {
+export default function SelectDocentesTutorias({
+  data,
+  setDataDocente,
+  handleInputChange,
+  setTutoriaInfo
+}) {
   const [search, setSearch] = React.useState("");
   const [arrayDocente, setArrayDocente] = React.useState([]);
 
@@ -15,46 +20,44 @@ export default function SelectDocentesTutorias({ data, setDataDocente, handleInp
   }, []);
 
   const getTutorias = async (event) => {
-    const response = await fetch(`${URL_BACKEND_GET_TUTORIAS}/${event.target.value}`,{
-      headers:{
-        Authorization:`Bearer ${token}`
+    const response = await fetch(
+      `${URL_BACKEND_GET_TUTORIAS}/${event.target.value}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-    });
-    if(response.status === 401){
-      window.location.href="/my/logout";
-      throw new Error (data.message);
-    }else{
+    );
+    if (response.status === 401) {
+      window.location.href = "/my/logout";
+      throw new Error(data.message);
+    } else {
       const data = await response.json();
       return data.datos;
     }
-  }
+  };
 
-  function handleChange(event) {
-    const toastId=toast.loading("Obteniendo información...");
-    fetch(`${URL_BACKEND_DOCENTE}/${event.target.value}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if(data.status_code === 401){
-            window.location.href="/my/logout";
-            throw new Error (data.message);
-        }else if(data.status_code === 400){
-            throw new Error (data.message);
-        }else{
-            const resData=getTutorias(event);
-            console.log(resData);
-            setDataDocente(data.datos);
-            toast.dismiss(toastId);
+  async function handleChange(event) {
+    const toastId = toast.loading("Obteniendo información...");
+    try {
+      const response = await fetch(
+        `${URL_BACKEND_DOCENTE}/${event.target.value}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      .catch((error) => {
-        toast.error(error.message,{id:toastId});
-        console.log(error);
-      })
+      );
+      const data = await response.json();
+      const resTutorias = await getTutorias(event);
+      setTutoriaInfo(resTutorias);
+      console.log(resTutorias);
+      setDataDocente(data.datos);
+      toast.success("Información obtenida!", { id: toastId, duration: 5000 });
+    } catch (error) {
+      toast.error(error, { id: toastId, duration: 5000 });
+      console.error(error);
+    }
   }
 
   let arrayResult = [];
@@ -76,7 +79,7 @@ export default function SelectDocentesTutorias({ data, setDataDocente, handleInp
         onChangeCapture={handleInputChange}
         required
       >
-        <option value="">Seleccionar un docente</option>
+        <option value="">Docentes</option>
         {arrayResult?.map((docente, index) => (
           <option value={docente.numero_identificacion} key={index}>
             {docente.nombre}

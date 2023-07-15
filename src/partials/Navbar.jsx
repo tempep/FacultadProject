@@ -64,22 +64,22 @@ export default function Navbar() {
           </span>
         </NavLink>
         <div className="flex items-center md:order-2">
-          <button
-            type="button"
-            className="flex mr-3 text-sm bg-gray-100 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
-            id="user-button"
-            data-dropdown-toggle="user-dropdown"
-          >
-            <PersonFill className="h-8 mr-3 ml-3" size={40} />
-          </button>
+          <div className="flex justify-between">
+            <p className="text-white mt-1 mx-4">{userInfo.nombre}</p>
+            <button
+              type="button"
+              className="flex mr-3 text-sm bg-gray-100 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+              id="user-button"
+              data-dropdown-toggle="user-dropdown"
+            >
+              <PersonFill className="h-8 mr-3 ml-3" size={40} />
+            </button>
+          </div>
           <div
             className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="flex gap-x-6 items-center text-sm dark:text-white">
-                {<PersonFill size={25} />} {userInfo.nombre}
-              </span>
               <span className="flex gap-x-6 items-center text-sm truncate dark:text-gray-400">
                 {<EnvelopeAtFill size={25} color="white" />} {userInfo.email}
               </span>
