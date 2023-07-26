@@ -90,22 +90,21 @@ export default function MyNavbar() {
   };
 
   return (
-    <>
-      <nav className="topbar">
+    <aside className="sidebar">
+      <div className="sidebar_title">
         <h2>Facultad Project</h2>
-        <PersonFill size={25} />
-        <EnvelopeAtFill size={25} />
-        <NavLink to="/my/logout">Cerrar sesión <Power size={25} /></NavLink>
-      </nav>
-      <aside className="sidebar">
-        <ul>
-          {linksForRole().map((link) => (
-            <NavLink to={link.href}>
-              {link.label} {link.icon}
-            </NavLink>
-          ))}
-        </ul>
-      </aside>
-    </>
+      </div>
+      <ul className="link_list">
+        {linksForRole().map((link) => (
+          <NavLink to={link.href}>
+            {link.icon} {link.label}
+          </NavLink>
+        ))}
+      </ul>
+      <NavLink to="/my/logout">
+        <Power size={25} className="logout_link" />
+        Cerrar sesión
+      </NavLink>
+    </aside>
   );
 }

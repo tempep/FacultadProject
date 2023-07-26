@@ -5,6 +5,7 @@
 @use "../components/mixins" as *;
 
 .wrapper_new-user{
+    margin-left: 15%;
     background-color: $primary-color;
     overflow: hidden;
     display: grid;
