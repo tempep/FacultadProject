@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { LOGIN } from "../../config/routes/paths";
 import { useAuthContext } from "../../contexts/AuthContext";
-import Navbar from "../../partials/MyNavbar";
+import Navbar from "../../partials/Navbar";
 
 export default function PrivateRoute() {
   const { isAuthenticated } = useAuthContext();
@@ -12,8 +12,9 @@ export default function PrivateRoute() {
   }
 
   return (
-      <Navbar>
-        <Outlet />
-      </Navbar>
+    <>
+      <Navbar />
+      <Outlet />
+    </>
   );
 }

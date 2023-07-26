@@ -1,4 +1,5 @@
 import React from "react";
+import "../scss/layout/_navbar.scss";
 import { NavLink } from "react-router-dom";
 import {
   Calendar2CheckFill,
@@ -12,13 +13,7 @@ import {
   WindowPlus,
 } from "react-bootstrap-icons";
 
-export default function MyNavbar({ children }) {
-  const activeStyle = {
-    fontWeight: "bold",
-    color: "yellow",
-    textDecoration: "underline",
-  };
-
+export default function MyNavbar() {
   const linksForRole = () => {
     let linksRoutes = [];
     if (isAdmin()) {
@@ -96,52 +91,21 @@ export default function MyNavbar({ children }) {
 
   return (
     <>
-        {/* <nav class="bg-gray-900">
-          <div class="max-w-screen-xl flex flex-wrap items-center justify-between p-4">
-            <NavLink to="#" class="flex items-center">
-              <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">
-                Facultad-
-              </span>
-              <span className="self-center text-2xl font-semibold whitespace-nowrap text-yellow-200">
-              Project
-              </span>
+      <nav className="topbar">
+        <h2>Facultad Project</h2>
+        <PersonFill size={25} />
+        <EnvelopeAtFill size={25} />
+        <NavLink to="/my/logout">Cerrar sesión <Power size={25} /></NavLink>
+      </nav>
+      <aside className="sidebar">
+        <ul>
+          {linksForRole().map((link) => (
+            <NavLink to={link.href}>
+              {link.label} {link.icon}
             </NavLink>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-              <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 rounded-lg bg-gray-900 md:flex-row md:space-x-8 ">
-                {linksForRole().map((link) => (
-                  <li>
-                  <NavLink
-                    to={link.href}
-                    style={({ active }) => active ? activeStyle : null}
-                    className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded bg-transparent md:p-0"
-                    >
-                    {link.label} {link.icon}
-                  </NavLink>
-                    </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </nav> */}
-        <aside
-          id="sidebar-multi-level-sidebar"
-          class="absolute top-18 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-          aria-label="Sidebar"
-        >
-          <div class="h-full overflow-y-auto bg-gray-900">
-            <ul class="space-y-2 font-medium">
-              {linksForRole().map((link) => (
-                <NavLink
-                  to={link.href}
-                  style={({ active }) => (active ? activeStyle : null)}
-                >
-                  {link.label} {link.icon}
-                </NavLink>
-              ))}
-            </ul>
-          </div>
-        </aside>
-      {children}
+          ))}
+        </ul>
+      </aside>
     </>
   );
 }

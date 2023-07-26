@@ -1,0 +1,13 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_new-user{
+    background-color: $primary-color;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    
+}
