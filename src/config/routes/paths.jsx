@@ -11,5 +11,6 @@ export const EDITUSER = '/my/edit-user';
 export const CONSULTAR = '/my/consultar';
 export const SOLICITAR = '/my/solicitar';
 export const DASHBOARD = '/my/dashboard';
-export const VALIDATION = '/validation'
+export const VALIDATION = '/validation';
+export const VALIDATIONPRIVATE = '/my/validation'
 export const NOTFOUND = '*';

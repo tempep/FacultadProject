@@ -1,0 +1,84 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_login {
+    overflow: hidden;
+    background-color: $primary-color;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-content: center;
+
+    img.logo_unibq {
+        width: 100%;
+        height: auto;
+    }
+
+    .form_login {
+        border-radius: 5px;
+        background: $secundary-color;
+        display: grid;
+        grid-template-columns: 1fr, 1fr;
+        justify-content: center;
+        align-content: center;
+        gap: 10px;
+
+        &.header {
+            grid-column: 1/3;
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+        }
+
+        label {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            grid-column: 1/2;
+        }
+
+        input {
+            grid-column: 2/3;
+        }
+
+        input[type=email] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            outline: none;
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            box-sizing: border-box;
+            transition: border .2s;
+
+            &:focus {
+                border-bottom: 3px solid $primary-color;
+            }
+        }
+
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            outline: none;
+            background-color: transparent;
+            border: 1px solid $primary-color;
+            box-sizing: border-box;
+            transition: border .2s;
+
+            &:focus {
+                border-bottom: 3px solid $primary-color;
+            }
+        }
+
+        button {
+            grid-column: 1/3;
+            width: 100%;
+            @include button-style-primary($primary-color, $primary-bright-color);
+        }
+    }
+}

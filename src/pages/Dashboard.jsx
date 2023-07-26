@@ -12,7 +12,7 @@ export default function Dashboard() {
     datasets: [
       {
         label: "# of Votes",
-        data: [byDay, byWeek, byMonth],
+        data: [4, 6, 8],
         backgroundColor: ["red", "yellow", "blue"],
       },
     ],
@@ -20,6 +20,7 @@ export default function Dashboard() {
 
   return (
     <main className="grid grid-cols-2 justify-center items-center bg-dark-blue h-screen overflow-hidden">
+      <h1 className="text-5xl text-white text-center">Dashboard</h1>
       <section className="flex flex-col">
         <Doughnut
           data={data}
@@ -28,7 +29,6 @@ export default function Dashboard() {
           options={{ maintainAspectRatio: false }}
         />
       </section>
-      <div></div>
     </main>
   );
 }

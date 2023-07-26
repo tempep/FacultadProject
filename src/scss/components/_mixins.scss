@@ -1,0 +1,33 @@
+@mixin button-style-primary($color,$bright-color) {
+    padding: 10px 20px;
+    background-color: $color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 24px;
+    transition: padding .2s;
+
+    &:hover{
+        cursor: pointer;
+        background-color: $bright-color;
+        box-shadow: 6px 8px black;
+        padding: 12px 24px;
+    }
+}
+
+@mixin button-style-secundary($color,$bright-color) {
+    padding: 10px 20px;
+    background-color: $color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 24px;
+    transition: padding .2s;
+
+    &:hover{
+        cursor: pointer;
+        background-color: $bright-color;
+        box-shadow: 6px 8px black;
+        padding: 12px 24px;
+    }
+}

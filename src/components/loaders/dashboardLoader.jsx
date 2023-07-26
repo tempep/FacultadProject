@@ -16,14 +16,10 @@ async function getUserInformation(token) {
       },
     });
     const data = await response.json();
-    if (data.status_code === 401) {
-      throw new Error(data.message);
-    } else {
-      window.localStorage.setItem("userInfo", JSON.stringify(data.datos));
-      console.log(window.localStorage.getItem("userInfo"));
-    }
+    window.localStorage.setItem("userInfo", JSON.stringify(data.datos));
   } catch (error) {
     console.error(err.message);
+    window.location.href="/my/logout";
   }
 }
 
@@ -97,13 +93,16 @@ async function getTutoriasByMonth(token, userInfo) {
 }
 
 export const dashboardLoader = async () => {
+  let byMonth = 0;
+  let byDay = 0;
+  let byWeek = 0;
   const token = window.localStorage.getItem("token");
   await getUserInformation(token);
   const objStored = window.localStorage.getItem("userInfo");
-  const userInfo = JSON.parse(objStored);
-  const byMonth = await getTutoriasByMonth(token, userInfo);
-  const byWeek = await getTutoriasByWeek(token, userInfo);
-  const byDay = await getTutoriasByDay(token, userInfo);
+    const userInfo = JSON.parse(objStored);
+    byMonth = await getTutoriasByMonth(token, userInfo);
+    byWeek = await getTutoriasByWeek(token, userInfo);
+    byDay = await getTutoriasByDay(token, userInfo);
   return {
     byDay,
     byWeek,

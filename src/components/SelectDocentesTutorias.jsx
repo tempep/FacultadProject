@@ -56,7 +56,7 @@ export default function SelectDocentesTutorias({
       toast.success("Información obtenida!", { id: toastId, duration: 5000 });
     } catch (error) {
       toast.error(error, { id: toastId, duration: 5000 });
-      console.error(error);
+      console.error(error.message);
     }
   }
 

@@ -76,7 +76,7 @@ export default function NewTutoria() {
   async function handleSubmit(event) {
     event.preventDefault();
     if (newTutoria.estudiantes.length === 0) {
-      toast.error("Debe agregar al menos un estudiante a la tutoria.");
+      toast.error("Debe agregar al menos un estudiante a la tutoria. Para agregar un estudiante debe presionar el boton 'Agregar'",{ duration:7000});
     } else {
       const toastId = toast.loading("Creando tutoria...");
       const response = await fetch(URL_BACKEND_NEWTUTORIA, {

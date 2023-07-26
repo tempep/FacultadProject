@@ -1,5 +1,4 @@
 import { toast } from "react-hot-toast";
-import Navbar from "../partials/Navbar";
 
 const URL_BACKEND_ASIGNATURAS='http://localhost:8080/asignatura/asignaturas';
 
@@ -51,7 +50,6 @@ export default function ConsultarTutoria (){
 
     return (
         <div>
-            <Navbar />
             <div className="consultarContainer">
             <section className="consultar-boxSelect">
                 <div className="headBox">

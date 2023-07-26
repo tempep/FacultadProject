@@ -1,7 +1,6 @@
 import React from "react";
 import { PencilSquare, Plus, Trash3Fill, FilePdf, FilePdfFill } from "react-bootstrap-icons";
 import { toast } from "react-hot-toast";
-import Modal from "./ModalEditTutoria";
 
 const URL_BACKEND_DELETE_TUTORIA =
   "http://127.0.0.1:5000/tutoria/delete_tutoria";

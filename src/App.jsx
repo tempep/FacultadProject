@@ -1,4 +1,5 @@
 import React from "react";
+import "./scss/main.scss";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
@@ -18,6 +19,7 @@ import {
   EDITUSER,
   CREARCUENTA,
   DASHBOARD,
+  VALIDATIONPRIVATE
 } from "./config/routes/paths";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import Logout from "./pages/Logout";
@@ -92,6 +94,10 @@ const router2 = createBrowserRouter([
         path: CONSULTAR,
         element: <ConsultarTutoria />,
       },
+      {
+        path: VALIDATIONPRIVATE,
+        element: <CodeValidation />,
+      }
     ],
   },
   {
