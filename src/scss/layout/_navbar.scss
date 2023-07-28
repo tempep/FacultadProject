@@ -34,14 +34,15 @@
         }
     }
 
-
-    & a {
-        grid-column: 2/3;
+    ul.link_list li a {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        align-items: center;
+        gap: 5px;
         color: $primary-color;
         padding: 6px 8px 6px 16px;
         text-decoration: none;
         font-size: 20px;
-        display: block;
         transition: .2s;
 
         &:hover {
@@ -53,12 +54,26 @@
         &:active {
             font-size: bold;
             text-decoration: underline;
+            color: $white-color;
         }
     }
 
     .logout_link {
-        display: inline-flex;
-        justify-items: center;
+        display: grid;
+        grid-template-columns: 1fr 4fr;
         align-items: center;
+        color: $primary-color;
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        transition: .2s;
+        margin-bottom: 20px;
+
+        &:hover {
+            padding-left: 30px;
+            background-color: rgba($color: rgb(221, 6, 6), $alpha: 1.0);
+            box-shadow: 2px 4px rgb(18, 18, 18);
+            color: $white-color;
+        }
     }
 }

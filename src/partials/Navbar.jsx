@@ -21,17 +21,17 @@ export default function MyNavbar() {
         {
           href: "/my/new-user",
           label: "Nuevo usuario",
-          icon: <PersonFillAdd size={25} />,
+          icon: <PersonFillAdd size={25}  />,
         },
         {
           href: "/my/edit-user",
           label: "Editar usuario",
-          icon: <PersonFillGear size={25} />,
+          icon: <PersonFillGear size={25}  />,
         },
         {
           href: "/my/new-tutoria",
           label: "Nueva tutoria",
-          icon: <Calendar2CheckFill size={25} />,
+          icon: <Calendar2CheckFill size={25}  />,
         },
         {
           href: "/my/solicitar",
@@ -41,7 +41,7 @@ export default function MyNavbar() {
         {
           href: "/my/tutorias",
           label: "Tutorias",
-          icon: <PersonFillExclamation size={25} />,
+          icon: <PersonFillExclamation size={25}  />,
         }
       );
       return linksRoutes;
@@ -55,7 +55,7 @@ export default function MyNavbar() {
         {
           href: "/my/tutorias",
           label: "Tutorias",
-          icon: <PersonFillExclamation size={25} />,
+          icon: <PersonFillExclamation size={25}  />,
         }
       );
       return linksRoutes;
@@ -63,7 +63,7 @@ export default function MyNavbar() {
       linksRoutes.push({
         href: "/my/tutorias",
         label: "Tutorias",
-        icon: <PersonFillExclamation size={25} />,
+        icon: <PersonFillExclamation size={25}  />,
       });
       return linksRoutes;
     }
@@ -96,14 +96,16 @@ export default function MyNavbar() {
       </div>
       <ul className="link_list">
         {linksForRole().map((link) => (
-          <NavLink to={link.href}>
-            {link.icon} {link.label}
-          </NavLink>
+          <li>
+            <NavLink to={link.href}>
+            <i>{link.icon}</i><span>{link.label}</span>
+            </NavLink>
+          </li>
         ))}
       </ul>
-      <NavLink to="/my/logout">
-        <Power size={25} className="logout_link" />
-        Cerrar sesión
+      <NavLink to="/my/logout" className="logout_link">
+        <Power size={25} />
+        <span>Cerrar sesión</span>
       </NavLink>
     </aside>
   );
