@@ -5,9 +5,7 @@ export default function Home() {
     <main className="wrapper_home">
       <div className="title_container">
         <h1 className="title">
-          <span className="sub_title1">Bienvenidos a</span>
-          <span className="sub_title2">Facultad</span>
-          <span className="sub_title3">Project</span>
+          Bienvenidos a Facultad Project
         </h1>
       </div>
       <div className="btn_container">

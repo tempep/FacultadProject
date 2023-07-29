@@ -5,7 +5,16 @@ import SelectAsignaturas from "../components/SelectAsignaturas";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { PersonAdd } from "react-bootstrap-icons";
+import {
+  PersonAdd,
+  Envelope,
+  Key,
+  Phone,
+  CardText,
+  Person,
+  CardList,
+  Fingerprint,
+} from "react-bootstrap-icons";
 import SelectRoles from "../components/SelectRoles";
 import SelectCarreras from "../components/SelectCarreras";
 const MySwal = withReactContent(Swal);
@@ -134,136 +143,159 @@ export default function NewUser() {
 
   return (
     <main className="wrapper_new-user">
-      <PersonAdd size={80} color="yellow" />
+      <section className="title">
+        <PersonAdd size={80} color="yellow" />
         <h1 className="">Información del usuario</h1>
-        <form onSubmit={handleSubmit} id="formNewUser">
-          <div className="">
-            <input
-              type="text"
-              name="nombre"
-              id="nombre"
-              className=""
-              onChange={handleInputChange}
-              placeholder=" "
-              required
-            />
-            <label htmlFor="nombre" className="">
-              Nombre completo
-            </label>
-          </div>
-          <div className="">
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className=""
-              onChange={handleInputChange}
-              placeholder=" "
-              required
-            />
-            <label htmlFor="email" className="">
-              Correo electrónico
-            </label>
-          </div>
-          <div className="">
+      </section>
+      <form onSubmit={handleSubmit} id="formNewUser">
+        <div className="row1">
+          <i className="icon">
+            <Person size={25} />
+          </i>
+          <input
+            type="text"
+            name="nombre"
+            id="nombre"
+            className=""
+            onChange={handleInputChange}
+            placeholder="Nombre completo"
+            required
+          />
+        </div>
+        <div className="row2">
+          <i className="icon">
+            <Envelope size={25} />
+          </i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className=""
+            onChange={handleInputChange}
+            placeholder="Correo electrónico"
+            required
+          />
+        </div>
+        <div className="row3">
+          <div className="pass">
+            <i className="icon">
+              <Key size={25} />
+            </i>
             <input
               type="password"
               name="password"
               id="password"
               className=""
               onChange={handleInputChange}
-              placeholder=" "
+              placeholder="Contraseña"
               minLength={8}
               required
             />
-            <label htmlFor="password" className="">
-              Contraseña
-            </label>
           </div>
-          <div className="">
+          <div className="confirmPass">
+            <i className="icon">
+              <Key size={25} />
+            </i>
             <input
               type="password"
               id="confirmPass"
               className=""
               onChange={handleInputChange}
               onKeyUp={validatePassword}
-              placeholder=" "
+              placeholder="Confirmar contraseña"
               minLength={8}
               required
             />
-            <label htmlFor="confirmPass" className="">
-              Confirmar contraseña
-            </label>
-            <span id="wrongPassAlert"></span>
           </div>
-          <div className="">
-            <div className="">
-              <input
-                type="tel"
-                name="celular"
-                id="celular"
-                className=""
-                onChange={handleInputChange}
-                placeholder=" "
-                onKeyDown={handleNumbers}
-                maxLength={10}
-                required
-              />
-              <label htmlFor="celular" className="">
-                Celular
-              </label>
-            </div>
-            <div className="">
-              <input
-                type="text"
-                name="numero_identificacion"
-                id="numero_identificacion"
-                className=""
-                onChange={handleInputChange}
-                placeholder=" "
-                onKeyDown={handleNumbers}
-                maxLength={12}
-                required
-              />
-              <label htmlFor="numero_identificacion" className="">
-                Número de identificación
-              </label>
-            </div>
+          <span id="wrongPassAlert"></span>
+        </div>
+        <div className="row4">
+          <div className="celular">
+            <i className="icon">
+              <Phone size={25} />
+            </i>
+            <input
+              type="tel"
+              name="celular"
+              id="celular"
+              onChange={handleInputChange}
+              placeholder="Celular"
+              onKeyDown={handleNumbers}
+              maxLength={10}
+              required
+            />
           </div>
-          <div className="">
+          <div className="numero_identificacion">
+            <i className="icon">
+              <CardText size={25} />
+            </i>
+            <input
+              type="text"
+              name="numero_identificacion"
+              id="numero_identificacion"
+              onChange={handleInputChange}
+              placeholder="Número de identificación"
+              onKeyDown={handleNumbers}
+              maxLength={12}
+              required
+            />
+          </div>
+        </div>
+        <div className="row5">
+          <div className="container_tipo_identificacion">
+            <i className="icon">
+              <CardList size={25} />
+            </i>
+            <select
+              name="tipo_identificacion"
+              className="tipo_identificacion"
+              onChange={handleInputChange}
+            >
+              <option value="" hidden>
+                Tipo de identificación
+              </option>
+              <option value="cc">Cedúla de ciudadania</option>
+              <option value="ti">Tarjeta de identidad</option>
+              <option value="pas">Pasaporte</option>
+              <option value="ce">Cedúla de extranjería</option>
+            </select>
+          </div>
+          <div className="container_roles">
+            <i className="icon">
+              <Fingerprint size={25} />
+            </i>
             <SelectRoles
               setDataNewUser={setDataNewUser}
               dataNewUser={dataNewUser}
             />
           </div>
-          <div className="">
-            {isStudent() && (
+        </div>
+        <div className="row6">
+          {isStudent() && (
+            <SelectCarreras
+              handleInputChange={handleInputChange}
+              data={dataLoaded.carreras}
+            />
+          )}
+          {isTeacher() && (
+            <>
+              <SelectAsignaturas
+                data={dataLoaded.asignaturas}
+                setDataNewUser={setDataNewUser}
+                dataNewUser={dataNewUser}
+              />
               <SelectCarreras
+                isTeacher={isTeacher()}
                 handleInputChange={handleInputChange}
                 data={dataLoaded.carreras}
               />
-            )}
-            {isTeacher() && (
-              <>
-                <SelectAsignaturas
-                  data={dataLoaded.asignaturas}
-                  setDataNewUser={setDataNewUser}
-                  dataNewUser={dataNewUser}
-                />
-                <SelectCarreras
-                  isTeacher={isTeacher()}
-                  handleInputChange={handleInputChange}
-                  data={dataLoaded.carreras}
-                />
-              </>
-            )}
-          </div>
-          <div className="">
-            <button className="" id="btnSubmit">
-              Aceptar
-            </button>
-          </div>
-        </form>
+            </>
+          )}
+        </div>
+          <button id="btnSubmit">
+            Aceptar
+          </button>
+      </form>
     </main>
   );
 }

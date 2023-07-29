@@ -5,6 +5,7 @@
 @use "../components/mixins" as *;
 
 .wrapper_login {
+    height: 100vh;
     overflow: hidden;
     background-color: $primary-color;
     display: grid;

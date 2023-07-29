@@ -50,11 +50,12 @@
             background-color: $white-color;
             box-shadow: 2px 4px rgba(48, 47, 47, 0.636);
         }
-
-        &:active {
+        &.active{
             font-size: bold;
             text-decoration: underline;
-            color: $white-color;
+            background-color: $white-color;
+            margin: 20px 8px 20px 8px;
+            border-radius: 5px;
         }
     }
 

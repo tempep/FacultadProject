@@ -4,11 +4,178 @@
 /*Components*/
 @use "../components/mixins" as *;
 
-.wrapper_new-user{
+.wrapper_new-user {
+    height: 100vh;
     margin-left: 15%;
     background-color: $primary-color;
+    color: $white-color;
     overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 30px;
+
+    & section.title {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    & #formNewUser {
+        align-self: center;
+        max-width: 50%;
+        display: grid;
+        grid-template-rows: repeat(5, 1fr);
+        row-gap: 20px;
+
+        & .row1 {
+            grid-row: 1/2;
+            display: grid;
+            grid-template-columns: 1fr 12fr;
+            justify-content: center;
+            align-content: center;
+        }
+
+        & .row2 {
+            grid-row: 2/3;
+            display: grid;
+            grid-template-columns: 1fr 12fr;
+            justify-content: center;
+            align-content: center;
+        }
+
+        & .row3 {
+            grid-row: 3/4;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 10px;
+            justify-content: center;
+            align-content: center;
+
+            & div.pass {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+            }
+
+            & div.confirmPass {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+            }
+        }
+
+        & .row4 {
+            grid-row: 4/5;
+            display: grid;
+            column-gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            align-content: center;
+
+            & div.celular {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+            }
+
+            & div.numero_identificacion {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+
+            }
+        }
+
+        & .row5 {
+            grid-row: 5/6;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            align-content: center;
+            column-gap: 10px;
+
+            & .container_tipo_identificacion {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+            }
+
+            & .container_roles {
+                display: grid;
+                grid-template-columns: 1fr 5.5fr;
+                justify-content: center;
+                align-content: center;
+            }
+        }
+
+        & .row6 {
+            grid-row: 6/7;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            align-content: center;
+            gap: 10px;
+
+            & div.container_input_search {
+                display: flex;
+            }
+        }
+
+        & select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            width: 100%;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        & input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            outline: none;
+            transition: .2s;
+
+            &::placeholder {
+                font-size: large;
+            }
+
+            &:focus {
+                border: 2px solid $secundary-color;
+            }
+        }
+
+        & i.icon {
+            max-width: 50px;
+            max-height: 50px;
+            padding: 10px;
+            min-width: 50px;
+            text-align: center;
+            background-color: $secundary-color;
+            border-radius: 5px;
+            color: $primary-color;
+        }
+
+        button#btnSubmit{
+            justify-self: center;
+            width: 50%;
+            @include button-style-primary($primary-bright-color, $primary-bright-color);
+        }
+
+    }
 }

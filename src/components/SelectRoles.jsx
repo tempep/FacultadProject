@@ -30,15 +30,14 @@ export default function SelectRoles({ setDataNewUser, dataNewUser }) {
   const hostname = window.location.hostname;
   console.log(location + "------" + hostname)
   return (
-    <main>
       <select
         name="rol"
         id="rol"
         required
         disabled={dataNewUser.rol.length === 2 && true}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="select_roles"
       >
-        <option value="">Roles disponibles</option>
+        <option value="" hidden>Roles disponibles</option>
         {!dataNewUser.rol[0] && (
           <>
             {location === `http://${hostname}:5173/my/new-user` && <option value="ROLE_ADMIN" onClick={alertConfirm}>Administrador</option>}
@@ -59,6 +58,5 @@ export default function SelectRoles({ setDataNewUser, dataNewUser }) {
           </>
         )}
       </select>
-    </main>
   );
 }
