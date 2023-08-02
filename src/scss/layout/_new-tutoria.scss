@@ -1,0 +1,78 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_new-tutoria {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    background-color: $primary-color;
+    color: $white-color;
+    height: 100vh;
+    overflow: hidden;
+    margin-left: 15%;
+
+    & section.header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    & section.container_form {
+
+        & form#formNewTutoria {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+
+            & .row1 {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            & .row2 {
+                display: grid;
+                grid-template-columns: 1fr 0.86fr 0.1fr;
+                gap: 10px;
+
+                button.btn_add-student {
+                    padding: 6px 12px;
+                    background-color: $white-color;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+            }
+
+            & .row3 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            & .row4 {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            & button.btn_crear {
+                align-self: center;
+                width: 50%;
+                margin-top: 10px;
+                @include button-style-primary($primary-bright-color, $primary-bright-color);
+            }
+
+        }
+    }
+
+}

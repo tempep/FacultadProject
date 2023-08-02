@@ -21,6 +21,6 @@ const getAllUsers = async () => {
 }
 
 export const editUserLoader = () => {
-    const allUser = getAllUsers();
-    return allUser;
+    const users = getAllUsers();
+    return users;
 }

@@ -1,0 +1,14 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_tutoria-request{
+    height: 100vh;
+    margin-left: 15%;
+    background-color: $primary-color;
+    color: $white-color;
+    overflow: hidden;
+    
+}

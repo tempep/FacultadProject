@@ -1,0 +1,106 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_edit-user {
+    height: 100vh;
+    margin-left: 15%;
+    background-color: $primary-color;
+    color: $white-color;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    & section.title {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    & section.container_select-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 100px;
+
+        & div.container_select-icon {
+            align-self: baseline;
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+            row-gap: 20px;
+        }
+
+        & form#formEditUser {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            row-gap: 20px;
+
+            & .row1 {
+                grid-row: 1/2;
+                display: grid;
+                grid-template-columns: 1fr 12fr;
+                justify-content: center;
+                align-content: center;
+            }
+
+            & .row2 {
+                grid-row: 2/3;
+                display: grid;
+                grid-template-columns: 1fr 12fr;
+                justify-content: center;
+                align-content: center;
+            }
+
+            & .row3 {
+                grid-row: 3/4;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                column-gap: 10px;
+                justify-content: center;
+                align-content: center;
+
+                & div.celular {
+                    display: flex;
+
+                }
+
+                & div.numero_identificacion {
+                    display: flex;
+                }
+            }
+
+            & .row4 {
+                grid-row: 4/5;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                column-gap: 10px;
+                justify-content: center;
+                align-content: center;
+
+                & div.container_tipo_identificacion {
+                    display: flex;
+                }
+
+                & div.container_roles {
+                    display: flex;
+                }
+            }
+
+            button#btnSubmit {
+                @include button-style-primary($primary-bright-color, $primary-bright-color);
+                width: 50%;
+                justify-self: center;
+            }
+
+        }
+    }
+}

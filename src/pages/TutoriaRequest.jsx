@@ -65,23 +65,21 @@ export default function TutoriaRequest() {
   console.log(dataLoader.datos);
 
   return (
-    <main className="h-screen bg-dark-blue overflow-hidden grid grid-cols-1 md:grid-cols-2 justify-items-center items-center">
-        <section className="grid justify-items-center gap-y-6">
+    <main className="wrapper_tutoria-request">
+        <section className="header">
           <WindowPlus size={80} fill="yellow" className="mt-6" />
           <h2 className="text-5xl text-white">Nueva solicitud</h2>
         </section>
       <form id="formTutoriaRequest" onSubmit={handleSubmit}>
-        <section className="grid justify-items-center gap-y-6">
-            <h2 className="text-3xl text-white border-b">Información de la solicitud</h2>
+        <section className="">
           <SelectDocentes data={dataLoader.datos} handleInputChange={handleInputChange}/>
           <textarea
             name="descripcion_solicitud"
             onChange={handleInputChange}
             rows="4"
-            className="block p-2.5 w-4/5 md:w-full text-sm rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500"
             placeholder="Descripción de la solicitud..."
           />
-        <button className="text-white focus:outline-none focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-base md:px-5 px-16 py-2.5 bg-blue-700 hover:bg-blue-800 border-gray-700">
+        <button className="btn_solicitar">
            Solicitar 
         </button>
         </section>
