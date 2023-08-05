@@ -48,7 +48,7 @@ export default function SelectCarreras({ isTeacher, handleInputChange, data }) {
         disabled=""
         onChange={handleInputChange}
       >
-        <option value="" hidden>Seleccionar carrera</option>
+        <option value="" hidden>Carreras</option>
         {arrayResult?.map((carrera, index) => (
           <option value={carrera.id} key={index} onClick={alertConfirm}>
             {carrera.nombre}
@@ -59,7 +59,7 @@ export default function SelectCarreras({ isTeacher, handleInputChange, data }) {
         <i className="icon">
           <Search size={25} />
         </i>
-        <FilterInput />
+        <FilterInput title="nombre" />
       </div>
     </>
   );

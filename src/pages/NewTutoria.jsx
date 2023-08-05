@@ -8,11 +8,13 @@ import SelectAsignaturasCurrentUser from "../components/SelectAsignaturasCurrent
 import SelectDocentesTutorias from "../components/SelectDocentesTutorias";
 import { useLoaderData } from "react-router-dom";
 import { DataContext } from "../contexts/DataContext";
+import RequiredAuth from "../components/RequiredAuth";
 
 const URL_BACKEND_NEWTUTORIA = "http://127.0.0.1:5000/tutoria/create_tutoria";
 
 export default function NewTutoria() {
-  const { dataDocente, setDataDocente } = React.useContext(DataContext);
+  const { dataDocente } = React.useContext(DataContext);
+  const [infoDocente, setInfoDocente]=React.useState({});
   const dataLoader = useLoaderData();
   const token = window.localStorage.getItem("token");
   const objStored = window.localStorage.getItem("userInfo");
@@ -28,7 +30,7 @@ export default function NewTutoria() {
     tema_desarrollar: "",
   });
 
-  console.log(newTutoria);
+  console.log();
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -118,7 +120,7 @@ export default function NewTutoria() {
     <main className="wrapper_new-tutoria">
       <section className="header">
         <Calendar2CheckFill size={80} fill="yellow" />
-        <h1 className="text-white text-5xl md:mb-8 mt-4">Agendar tutoria</h1>
+        <h1>Agendar tutoria</h1>
         <ListAddedStudents newTutoria={newTutoria} />
       </section>
       <section className="container_form">
@@ -165,7 +167,7 @@ export default function NewTutoria() {
                 type="text"
                 name="estudiante"
                 id="estudianteTutoria"
-                placeholder="Filtrar"
+                placeholder="Filtrar por documento"
                 onKeyDown={handleKeyDown}
                 maxLength={12}
                 onChange={handleInputChange}
@@ -179,13 +181,12 @@ export default function NewTutoria() {
               <div className="row3">
                 <SelectDocentesTutorias
                   data={dataLoader.docentes.datos}
-                  setDataDocente={setDataDocente}
-                  handleInputChange={handleInputChange}
+                  setInfoDocente={setInfoDocente}
                 />
               </div>
               <div className="row4">
                 <SelectAsignaturasCurrentUser
-                  userInfo={dataDocente}
+                  infoDocente={infoDocente}
                   handleInputChange={handleInputChange}
                 />
                 <div className="container_input-text">
@@ -203,7 +204,7 @@ export default function NewTutoria() {
           ) : (
             <div className="row4">
               <SelectAsignaturasCurrentUser
-                userInfo={userInfo}
+                infoDocente={infoDocente}
                 handleInputChange={handleInputChange}
               />
               <div className="">

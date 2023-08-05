@@ -10,5 +10,46 @@
     background-color: $primary-color;
     color: $white-color;
     overflow: hidden;
-    
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+
+
+    & section.header{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    & form#formTutoriaRequest{
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        gap: 10px;
+        background-color: $secundary-color;
+        border-radius: 5px;
+        padding: 10px;
+
+        h2{
+            text-align: center;
+            color: $primary-color;
+        }
+
+        & .row1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        button.btn_solicitar{
+            width: 50%;
+            align-self: center;
+            margin-top: 10px;
+            @include button-style-primary($primary-bright-color,$primary-bright-color)
+        }
+    }
 }

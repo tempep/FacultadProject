@@ -3,6 +3,7 @@ import React from "react";
 export const DataContext = React.createContext();
 
 export const DataProvider = ({ children }) => {
+  const [search, setSearch] = React.useState("");
   const [dataDocente, setDataDocente] = React.useState({});
   const [dataUser, setDataUser] = React.useState({
     nombre:"",
@@ -13,8 +14,7 @@ export const DataProvider = ({ children }) => {
     roles:[],
     asignaturas:[]
   });
-  const [search, setSearch] = React.useState("");
-  const [userInfo, setUserInfo] = React.useState({});
+  
 
   return (
     <DataContext.Provider
@@ -25,8 +25,6 @@ export const DataProvider = ({ children }) => {
         setDataUser,
         search,
         setSearch,
-        userInfo,
-        setUserInfo,
       }}
     >
       {children}

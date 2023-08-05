@@ -1,136 +1,110 @@
 import React from "react";
-import { PencilSquare, Plus, Trash3Fill, FilePdf, FilePdfFill } from "react-bootstrap-icons";
+import DataTable from "react-data-table-component";
+import { Trash, PencilSquare } from "react-bootstrap-icons";
 import { toast } from "react-hot-toast";
+const token = window.localStorage.getItem("token");
 
-const URL_BACKEND_DELETE_TUTORIA =
-  "http://127.0.0.1:5000/tutoria/delete_tutoria";
-const URL_BACKEND_EDIT_TUTORIA = "";
-const URL_BACKEND_REPORT = "http://127.0.0.1:5000/reports/reports_tutoria";
+export default function TableTutorias({ data }) {
+    const [isNewData, setIsNewData]=React.useState(false);
 
-export default function TableTutorias({ tutoriaInfo }) {
+  const buttonStyle = (backgroundColor) => {
+    return {
+      margin: "5px",
+      backgroundColor: `${backgroundColor}`,
+      border: "0",
+      cursor: "pointer",
+      borderRadius: "5px",
+      padding: "6px 6px 4px 6px",
+    };
+  };
 
-  function showStudents() {
-    toast.custom(
-      (t) => (
-        <div
-          className={`bg-white px-6 py-4 shadow-md rounded-full ${
-            t.visible ? "animate-enter" : "animate-leave"
-          }`}
-        >
-          <ul>
-            {tutoriaInfo[0].estudiantes.map((estudiante, index) => (
-              <li key={index}>{estudiante.nombre}</li>
-            ))}
-          </ul>
-        </div>
-      ),
+  const columns = React.useMemo(
+    () => [
       {
-        duration: 30000,
-        position: "top-center",
-        style: {
-          backgroundColor: "fff",
-          border: "1px solid #713200",
-        },
-      }
+        name: "FECHA",
+        selector: (row) => row.fecha,
+      },
+      {
+        name: "HORA INICIO",
+        selector: (row) => row.hora_inicio,
+      },
+      {
+        name: "HORA FINAL",
+        selector: (row) => row.hora_fin,
+      },
+      {
+        name: "TEMA",
+        selector: (row) => row.tema_desarrollar,
+      },
+      {
+        cell: (row) => (
+          <>
+            <button
+              style={buttonStyle("yellow")}
+              onClick={() => handleEdit(row.id)}
+            >
+              <PencilSquare size={20} color="black" />
+            </button>
+            <button
+              style={buttonStyle("red")}
+              onClick={() => handleDelete(row.id)}
+            >
+              <Trash size={20} color="black" />
+            </button>
+          </>
+        ),
+      },
+    ],[isNewData]);
+
+  const ExpandedComponent = ({ data }) => {
+    return (
+      <>
+        {data.estudiantes.map((estudiante) => (
+          <>
+            <span>{estudiante.nombre}</span>
+            <span> - </span>
+          </>
+        ))}
+      </>
     );
-  }
+  };
 
-  async function handleReport(id){
-    const toastId=toast.loading("Obteniendo reporte...");
-    try {
-        const newWindow = window.open(`http://127.0.0.1:5000/reports/reports_tutoria/${id}`, '_blank');
-        newWindow.focus();
-        toast.dismiss(toastId);
-    } catch (error) {
-        toast.error(error, {id:toastId, duration:5000})
-        console.error(error);        
-    }
-  }
-
-  async function handleDelete(id) {
-    const token = window.localStorage.getItem("token");
-    const toastId = toast.loading("Eliminando...");
-    try {
-      const response = await fetch(`${URL_BACKEND_DELETE_TUTORIA}/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
+  const handleDelete = async (id) => {
+    const URL_BACKEND_DELETE_TUTORIA="http://localhost:5000/tutoria/delete_tutoria";
+    const toastId=toast.loading("Eliminando tutoria...");
+    const response = await fetch(`${URL_BACKEND_DELETE_TUTORIA}/${id}`,{
+        headers:{
+            Authorization:`Bearer ${token}`
         },
-      });
-      toast.success("Tutoria eliminada!", { id: toastId, duration: 3000 });
-    } catch (error) {
-      toast.error(error, { id: toastId, duration: 5000 });
-      console.error(error);
+        method:"DELETE"
+    });
+    if(response.status === 401){
+        window.location.href="/my/logout";
+    }else{
+        setIsNewData(prevState => !prevState);
+        toast.success("Tutoria eliminada!", {id:toastId});
+        console.log(isNewData)
     }
-  }
+  };
 
+  const handleEdit = (id) => {
+    console.log(id);
+  };
 
   return (
-    <main>
-      <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Funciones
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Docente
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Fecha
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Hora inicio - fin
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Asignatura
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Tema desarrollado
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Estudiantes
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td scope="row" className="px-6 py-4 flex gap-x-6">
-                <button onClick={() => handleDelete(tutoriaInfo[0]?.id)}>
-                  <Trash3Fill size={25} fill="red" />
-                </button>
-                <button className="mt-1">
-                  <PencilSquare size={25} fill="yellow" />
-                </button>
-                <button onClick={() => handleReport(tutoriaInfo[0].id)}>
-                    <FilePdfFill size={25} color="white"/>
-                </button>
-              </td>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {tutoriaInfo[0]?.docente.nombre}
-              </th>
-              <td className="px-6 py-4">{tutoriaInfo[0]?.fecha}</td>
-              <td className="px-6 py-4">
-                {tutoriaInfo[0]?.hora_inicio} - {tutoriaInfo[0]?.hora_fin}
-              </td>
-              <td className="px-6 py-4">{tutoriaInfo[0]?.asignatura.nombre}</td>
-              <td className="px-6 py-4">{tutoriaInfo[0]?.tema_desarrollar}</td>
-              <td className="px-6 py-4 flex justify-center items-center gap-x-2">
-                {tutoriaInfo[0]?.estudiantes[0].nombre}{" "}
-                {tutoriaInfo[0]?.estudiantes.length > 1 && (
-                  <button onClick={showStudents}>
-                    <Plus size={35} fill="white" />
-                  </button>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </main>
+    <DataTable
+      title={`${
+        data[0]?.docente.nombre
+          ? `Tutorias de ${data[0].docente.nombre}`
+          : ""
+      }`}
+      columns={columns}
+      data={data}
+      responsive="true"
+      expandableRows
+      expandableRowsComponent={ExpandedComponent}
+      pagination
+      fixedHeader
+    />
   );
 }

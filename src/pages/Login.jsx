@@ -2,13 +2,15 @@ import React from "react";
 import "../scss/layout/_login.scss";
 import logo_unibq from "../../public/IUBLogo.jpeg";
 import { PersonVcard } from "react-bootstrap-icons";
-import { useAuthContext } from "../contexts/AuthContext";
 import { toast } from "react-hot-toast";
+import getUserInformation from "../components/GetUserInformation";
+import { useAuthContext } from "../contexts/AuthContext";
+
 
 const URL_BACKEND_LOGIN = "http://127.0.0.1:5000/auth/login";
 
 export default function Login() {
-  const { login } = useAuthContext();
+  const {login} = useAuthContext();
   const [dataLogin, setDataLogin] = React.useState({
     email: "",
     password: "",
@@ -23,7 +25,7 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
+  
       const toastId = toast.loading("Iniciando sesión...");
       const response = await fetch(URL_BACKEND_LOGIN, {
         method: "POST",
@@ -39,16 +41,11 @@ export default function Login() {
           id: toastId,
           duration: 3000,
         });
-        window.localStorage.setItem("token", data.token);
+        await getUserInformation(data.token);
         login();
-      } else {
-        throw new Error(data.message);
+        console.log("Hola login")
       }
-    } catch (error) {
       toast.dismiss();
-      toast.error(error.message);
-      console.log(error.message);
-    }
   }
 
   return (

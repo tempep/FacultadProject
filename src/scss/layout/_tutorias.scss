@@ -1,0 +1,38 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+.wrapper_tutorias {
+    height: 100vh;
+    margin-left: 15%;
+    background-color: $primary-color;
+    color: $white-color;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+    gap: 10px;
+
+    & section.header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    & section.table {
+        justify-self: center;
+        align-self: baseline;
+        width: 80%;
+
+
+            & div.container_select-docentes {
+                display: flex;
+                gap: 10px;
+                width: 50%;
+                margin-bottom: 10px;
+            }
+        
+    }
+}

@@ -1,6 +1,7 @@
 import React from "react";
-import { useAuthContext } from "../contexts/AuthContext";
 import { toast } from "react-hot-toast";
+import { useAuthContext } from "../contexts/AuthContext";
+
 
 export default function Logout(){
     const {logout}=useAuthContext();

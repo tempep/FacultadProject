@@ -12,8 +12,11 @@ import {
   Power,
   WindowPlus,
 } from "react-bootstrap-icons";
+import useLocaleStorage from "../hooks/useLocaleStorage";
 
 export default function MyNavbar() {
+  const userInfo=useLocaleStorage();
+  console.log(userInfo);
   const linksForRole = () => {
     let linksRoutes = [];
     if (isAdmin()) {
@@ -69,8 +72,6 @@ export default function MyNavbar() {
     }
   };
 
-  const objStored = window.localStorage.getItem("userInfo");
-  const userInfo = JSON.parse(objStored);
 
   const isTeacher = () => {
     var arrayRoles = [];

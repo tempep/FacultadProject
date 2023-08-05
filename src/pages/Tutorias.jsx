@@ -1,42 +1,55 @@
 import React from "react";
-import { DataContext } from "../contexts/DataContext";
-import { PersonExclamation } from "react-bootstrap-icons";
+import "styled-components";
+import "../scss/layout/_tutorias.scss";
+import { PersonExclamation, Trash, PencilSquare } from "react-bootstrap-icons";
 import { useLoaderData } from "react-router-dom";
-import SelectDocentesTutorias from "../components/SelectDocentesTutorias";
+import SelectDocentes from "../components/SelectDocentes";
+import DataTable from "react-data-table-component";
 import TableTutorias from "../components/TableTutorias";
+
+const URL_BACKEND_GET_TUTORIAS = "http://127.0.0.1:5000/tutoria/find_tutoria";
+const token = window.localStorage.getItem("token");
 
 export default function Tutorias() {
   const docentes = useLoaderData();
-  const [dataDocente, setDataDocente] = React.useState({});
   const [tutoriaInfo, setTutoriaInfo] = React.useState([]);
 
+  const handleInputChange = async (event) => {
+    const response = await fetch(
+      `${URL_BACKEND_GET_TUTORIAS}/${event.target.value}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 401) {
+      window.location.href = "/my/logout";
+      throw new Error(data.message);
+    } else {
+      const data = await response.json();
+      setTutoriaInfo(data.datos);
+      console.log(data);
+    }
+  };
+
+  console.log(tutoriaInfo)
+
   return (
-    <main className="h-screen overflow-hidden bg-dark-blue grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 justify-items-center md:items-center md:gap-x-2">
-      <section className="flex flex-col gap-y-12 items-center">
-        <div className="flex flex-col gap-y-6 items-center">
-          <PersonExclamation size={80} fill="yellow" />
-          <h1 className="text-5xl text-white">Consulta de tutorias</h1>
-        </div>
+    <main className="wrapper_tutorias">
+      <section className="header">
+        <PersonExclamation size={80} fill="yellow" />
+        <h1 className="text-5xl text-white">Consulta de tutorias</h1>
       </section>
-      <section>
-        <div className="relative overflow-x-auto flex flex-col justify-center items-center gap-y-4">
-          <h1 className="text-3xl text-white">Información docente</h1>
 
-          <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
-            <output>Nombre: {dataDocente?.nombre}</output>
-            <output>Correo: {dataDocente?.email}</output>
-            <output>Celular: {dataDocente?.celular}</output>
-          </div>
-
-          <SelectDocentesTutorias
+      <section className="table">
+        <div className="container_select-docentes">
+          <SelectDocentes
             data={docentes.datos}
-            setDataDocente={setDataDocente}
-            setTutoriaInfo={setTutoriaInfo}
+            handleInputChange={handleInputChange}
           />
         </div>
-      </section>
-      <section className="flex col-span-2 mb-64">
-        <TableTutorias tutoriaInfo={tutoriaInfo} />
+        <TableTutorias data={tutoriaInfo} />
       </section>
     </main>
   );

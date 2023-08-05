@@ -1,70 +1,32 @@
 import React from "react";
 import FilterInput from "./FilterInput";
-import { toast } from "react-hot-toast";
+import { DataContext } from "../contexts/DataContext";
 
-const URL_BACKEND_DOCENTE = "http://127.0.0.1:5000/usuario/find_usuario";
-const URL_BACKEND_GET_TUTORIAS = "http://127.0.0.1:5000/tutoria/find_tutoria";
+const URL_BACKEND_FIND_USER = "http://127.0.0.1:5000/usuario/find_usuario";
 const token = window.localStorage.getItem("token");
 
-export default function SelectDocentesTutorias({
-  data,
-  setDataDocente,
-  handleInputChange,
-  setTutoriaInfo
-}) {
-  const [search, setSearch] = React.useState("");
-  const [arrayDocente, setArrayDocente] = React.useState([]);
+export default function SelectDocentesTutorias({ data, setInfoDocente }) {
+  const { search } = React.useContext(DataContext);
 
-  React.useEffect(() => {
-    setArrayDocente(data);
-  }, []);
-
-  const getTutorias = async (event) => {
-    const response = await fetch(
-      `${URL_BACKEND_GET_TUTORIAS}/${event.target.value}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  const handleChange = async (event) => {
+    const response = await fetch(`${URL_BACKEND_FIND_USER}/${event.target.value}`,{
+      headers:{
+        Authorization:`Bearer ${token}`
       }
-    );
-    if (response.status === 401) {
+    });
+    if(response.status === 401){
       window.location.href = "/my/logout";
-      throw new Error(data.message);
-    } else {
+    }else{
       const data = await response.json();
-      return data.datos;
-    }
-  };
-
-  async function handleChange(event) {
-    const toastId = toast.loading("Obteniendo información...");
-    try {
-      const response = await fetch(
-        `${URL_BACKEND_DOCENTE}/${event.target.value}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await response.json();
-      const resTutorias = await getTutorias(event);
-      setTutoriaInfo(resTutorias);
-      console.log(resTutorias);
-      setDataDocente(data.datos);
-      toast.success("Información obtenida!", { id: toastId, duration: 5000 });
-    } catch (error) {
-      toast.error(error, { id: toastId, duration: 5000 });
-      console.error(error.message);
+      setInfoDocente(data.datos);
     }
   }
 
   let arrayResult = [];
   if (!search) {
-    arrayResult = arrayDocente;
+    arrayResult = data;
   } else {
-    arrayResult = arrayDocente.filter((docente) =>
+    arrayResult = data.filter((docente) =>
       docente.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
   }
@@ -72,11 +34,10 @@ export default function SelectDocentesTutorias({
   return (
     <>
       <select
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         name="docente_id"
         id="docente_id"
+        className="docentes_tutorias"
         onChange={handleChange}
-        onChangeCapture={handleInputChange}
         required
       >
         <option value="">Docentes</option>
@@ -86,7 +47,7 @@ export default function SelectDocentesTutorias({
           </option>
         ))}
       </select>
-      <FilterInput />
+      <FilterInput title="nombre"/>
     </>
   );
 }

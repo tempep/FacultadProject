@@ -58,7 +58,7 @@ export default function SelectAsignaturas({
         id="selectAsignaturas"
         required
       >
-        <option value="" hidden>Elegir asignatura</option>
+        <option value="" hidden>Asignaturas</option>
         {arrayResult?.map((asignatura, index) => (
           <option value={asignatura.id} key={index}>
             {asignatura.nombre}
@@ -69,7 +69,7 @@ export default function SelectAsignaturas({
         <i className="icon">
           <Search size={25} />
         </i>
-        <FilterInput />
+        <FilterInput title="nombre"/>
       </div>
     </>
   );

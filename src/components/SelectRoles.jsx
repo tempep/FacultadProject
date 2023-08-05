@@ -19,11 +19,11 @@ export default function SelectRoles({
 
   function addRolToArray(selectedRol) {
     setDataNewUser((prevState) => {
-      console.log(prevState)
-      const roles = prevState.roles.concat(selectedRol);
+      console.log(prevState);
+      const rol = prevState.rol.concat(selectedRol);
       return {
         ...prevState,
-        roles,
+        rol,
       };
     });
     toast.success("Rol asignado.", {
@@ -58,6 +58,19 @@ export default function SelectRoles({
         </>
       ) : (
         <>
+          {dataNewUser?.rol.length === 0 && (
+            <>
+              <option value="ROLE_ADMIN" onClick={alertConfirm}>
+                Administrador
+              </option>
+              <option value="ROLE_DOCENTE" onClick={alertConfirm}>
+                Docente
+              </option>
+              <option value="ROLE_ESTUDIANTE" onClick={alertConfirm}>
+                Estudiante
+              </option>
+            </>
+          )}
           {dataNewUser?.rol[0] === "ROLE_DOCENTE" && (
             <option value="ROLE_ADMIN" onClick={alertConfirm}>
               Administrador

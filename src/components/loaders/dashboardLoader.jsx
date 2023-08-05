@@ -1,27 +1,11 @@
 import { toast } from "react-hot-toast";
-const URL_BACKEND_USER_INFORMATION =
-  "http://127.0.0.1:5000/usuario/user_information";
+import useAuth from "../../hooks/useLocaleStorage";
 const URL_BACKEND_GET_TUTORIAS_BY_DAY_DOCENTE =
   "http://127.0.0.1:5000/tutoria/count_tutorias_day_by_docente";
 const URL_BACKEND_GET_TUTORIAS_BY_WEEK_DOCENTE =
   "http://127.0.0.1:5000/tutoria/count_tutorias_week_by_docente";
 const URL_BACKEND_GET_TUTORIAS_BY_MONTH_DOCENTE =
   "http://127.0.0.1:5000/tutoria/count_tutorias_month_by_docente";
-
-async function getUserInformation(token) {
-  try {
-    const response = await fetch(URL_BACKEND_USER_INFORMATION, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
-    window.localStorage.setItem("userInfo", JSON.stringify(data.datos));
-  } catch (error) {
-    console.error(err.message);
-    window.location.href="/my/logout";
-  }
-}
 
 async function getTutoriasByDay(token, userInfo) {
   try {
@@ -92,14 +76,14 @@ async function getTutoriasByMonth(token, userInfo) {
   }
 }
 
-export const dashboardLoader = async () => {
+async function dashboardLoader(){
+  const objStored = window.localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(objStored);
+  console.log(userInfo);
   let byMonth = 0;
   let byDay = 0;
   let byWeek = 0;
   const token = window.localStorage.getItem("token");
-  await getUserInformation(token);
-  const objStored = window.localStorage.getItem("userInfo");
-    const userInfo = JSON.parse(objStored);
     byMonth = await getTutoriasByMonth(token, userInfo);
     byWeek = await getTutoriasByWeek(token, userInfo);
     byDay = await getTutoriasByDay(token, userInfo);
@@ -109,3 +93,5 @@ export const dashboardLoader = async () => {
     byMonth,
   };
 };
+
+export default dashboardLoader;

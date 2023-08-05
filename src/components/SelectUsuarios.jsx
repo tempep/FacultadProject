@@ -50,7 +50,7 @@ export default function SelectUsuarios({ setFunction }) {
           </option>
         ))}
       </select>
-      <FilterInput />
+      <FilterInput title="nombre"/>
     </>
   );
 }

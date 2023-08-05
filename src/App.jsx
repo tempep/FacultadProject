@@ -39,65 +39,64 @@ import CrearCuenta from "./pages/CrearCuenta";
 import { crearCuentaLoader } from "./components/loaders/crearCuentaLoader";
 import Dashboard from "./pages/Dashboard";
 import { tutoriaRequestLoader } from "./components/loaders/tutoriaRequestLoader";
-import { dashboardLoader } from "./components/loaders/dashboardLoader";
+import dashboardLoader from "./components/loaders/dashboardLoader";
 import { newTutoriaLoader } from "./components/loaders/newTutoriaLoader";
-const LazyDashboard = React.lazy(() => import("./pages/Dashboard"));
+import RequiredAuth from "./components/RequiredAuth";
 
-const router2 = createBrowserRouter([
+
+
+const router = createBrowserRouter([
   {
     path: MY,
-    element: <PrivateRoute />,
+    element: <PrivateRoute allowedRoles={["ROLE_ADMIN"]}/>,
     children: [
-      {
-        index: true,
-        element: (
-          <React.Suspense fallback="Loading">
-            <LazyDashboard />
-          </React.Suspense>
-        ),
-        loader: dashboardLoader,
-      },
-      {
-        path: NEWUSER,
-        element: <NewUser />,
-        loader: newUserLoader,
-      },
-      {
-        path: EDITUSER,
-        element: <EditUser />,
-        loader: editUserLoader,
-      },
-      {
-        path: NEWTUTORIA,
-        element: <NewTutoria />,
-        loader:newTutoriaLoader
-      },
-      {
-        path: SOLICITAR,
-        element: <TutoriaRequest />,
-        loader: tutoriaRequestLoader,
-      },
-      {
-        path: TUTORIAS,
-        element: <Tutorias />,
-        loader: tutoriaRequestLoader,
-      },
-      {
-        path: LOGOUT,
-        element: <Logout />,
-      },
-      {
-        path: NOTFOUND,
-        element: <NotFound />,
-      },
-      {
-        path: CONSULTAR,
-        element: <ConsultarTutoria />,
-      },
-      {
-        path: VALIDATIONPRIVATE,
-        element: <CodeValidation />,
-      }
+          {
+            index: true,
+            element: <Dashboard />,
+            loader: dashboardLoader,
+          },
+          {
+            path: NEWUSER,
+            element: <NewUser />,
+            loader: newUserLoader,
+          },
+          {
+            path: EDITUSER,
+            element: <EditUser />,
+            loader: editUserLoader,
+          },
+          {
+            path: NEWTUTORIA,
+            element: <NewTutoria />,
+            loader:newTutoriaLoader
+          },
+          {
+            path: SOLICITAR,
+            element: <TutoriaRequest />,
+            loader: tutoriaRequestLoader,
+          },
+          {
+            path: TUTORIAS,
+            element: <Tutorias />,
+            loader: tutoriaRequestLoader,
+          },
+          {
+            path: CONSULTAR,
+            element: <ConsultarTutoria />,
+          },
+          {
+            path: LOGOUT,
+            element: <Logout />,
+          },
+          {
+            path: NOTFOUND,
+            element: <NotFound />,
+          },
+          
+          {
+            path: VALIDATIONPRIVATE,
+            element: <CodeValidation />,
+          }
     ],
   },
   {
@@ -129,7 +128,7 @@ export default function App() {
   return (
     <DataProvider>
       <AuthContextProvider>
-        <RouterProvider router={router2} />
+        <RouterProvider router={router} />
         <Toaster />
       </AuthContextProvider>
     </DataProvider>
