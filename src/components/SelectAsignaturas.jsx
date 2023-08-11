@@ -6,8 +6,8 @@ import { Search } from "react-bootstrap-icons";
 
 export default function SelectAsignaturas({
   data,
-  setDataNewUser,
-  dataNewUser,
+  setFunction,
+  dataFunction,
 }) {
   const { search } = React.useContext(DataContext);
   const [arrayAsignaturas, setArrayAsignaturas] = React.useState([]);
@@ -23,13 +23,13 @@ export default function SelectAsignaturas({
       } como asignatura?`
     );
     if (response) {
-      setDataNewUser((prevState) => {
-        const asignaturas = prevState.asignaturas.concat(
-          document.getElementById("selectAsignaturas").value
-        );
+      setFunction(prevState => {
+        let asignaturas = prevState?.asignaturas?.map((asignatura) => asignatura.id.toString());
+        asignaturas?.push(event.target.value);
+        console.log(asignaturas);
         return {
           ...prevState,
-          asignaturas,
+          ['asignaturas']:[event.target.value]
         };
       });
       toast.success(`Asignatura añadida.`, {
@@ -39,7 +39,7 @@ export default function SelectAsignaturas({
     }
   }
 
-  console.log(arrayAsignaturas);
+  console.log(dataFunction);
 
   let arrayResult = [];
   if (!search) {
@@ -53,7 +53,7 @@ export default function SelectAsignaturas({
   return (
     <>
       <select
-        name={dataNewUser.rol[0] === "ROLE_DOCENTE" ? "asignaturas" : ""}
+        name={dataFunction?.roles[0] === "ROLE_DOCENTE" ? "asignaturas" : ""}
         onChange={addStudenToArray}
         id="selectAsignaturas"
         required

@@ -1,4 +1,4 @@
-import React from "react";
+import {useContext} from "react";
 import { DataContext } from "../contexts/DataContext";
 import FilterInput from "./FilterInput";
 import { useLoaderData } from "react-router-dom";
@@ -6,13 +6,13 @@ import { useLoaderData } from "react-router-dom";
 const token = window.localStorage.getItem("token");
 const URL_BACKEND_FIND_USER = "http://localhost:5000/usuario/find_usuario";
 
-export default function SelectUsuarios({ setFunction }) {
-  const { search, setDataUser } = React.useContext(DataContext);
-  const users = useLoaderData();
+export default function SelectUsuarios({setFunction}) {
+  const { search, setDataUser } = useContext(DataContext);
+  const {users} = useLoaderData();
 
   function handleChangeSelect(event) {
     const { value } = event.target;
-    console.log(value);
+    setFunction(value);
     fetch(`${URL_BACKEND_FIND_USER}/${value}`, {
       headers: {
         Authorization: `Bearer ${token}`,

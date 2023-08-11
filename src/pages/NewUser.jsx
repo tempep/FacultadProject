@@ -29,7 +29,7 @@ export default function NewUser() {
     email: "",
     password: "",
     celular: "",
-    rol: [],
+    roles: [],
     numero_identificacion: "",
     tipo_identificacion: "",
     carrera: "",
@@ -40,12 +40,12 @@ export default function NewUser() {
   console.log(dataNewUser);
 
   const isStudent = () => {
-    const res = dataNewUser.rol.includes("ROLE_ESTUDIANTE");
+    const res = dataNewUser?.roles?.includes("ROLE_ESTUDIANTE");
     return res;
   };
 
   const isTeacher = () => {
-    const res = dataNewUser.rol.includes("ROLE_DOCENTE");
+    const res = dataNewUser?.roles?.includes("ROLE_DOCENTE");
     return res;
   };
 
@@ -91,7 +91,7 @@ export default function NewUser() {
             email: "",
             password: "",
             celular: "",
-            rol: [],
+            roles: [],
             numero_identificacion: "",
             tipo_identificacion: "",
             carrera: "",
@@ -112,11 +112,10 @@ export default function NewUser() {
   async function handleSubmit(event) {
     event.preventDefault();
     await MySwal.fire({
-      background: "rgba(17,29,53,255)",
       cancelButtonText: "Cancelar",
       confirmButtonText: "Aceptar",
       title: "Pregunta",
-      text: "¿Desea crear el usuario?",
+      text: "¿Está seguro de crear el usuario?",
       icon: "question",
       showDenyButton: true,
       showConfirmButton: true,
@@ -265,8 +264,8 @@ export default function NewUser() {
               <Fingerprint size={25} />
             </i>
             <SelectRoles
-              setDataNewUser={setDataNewUser}
-              dataNewUser={dataNewUser}
+              setFunction={setDataNewUser}
+              dataFunction={dataNewUser}
             />
           </div>
         </div>
@@ -281,8 +280,8 @@ export default function NewUser() {
             <>
               <SelectAsignaturas
                 data={dataLoaded.asignaturas}
-                setDataNewUser={setDataNewUser}
-                dataNewUser={dataNewUser}
+                setFunction={setDataNewUser}
+                dataFunction={dataNewUser}
               />
               <SelectCarreras
                 isTeacher={isTeacher()}

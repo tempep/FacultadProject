@@ -1,20 +1,21 @@
-import React from "react";
+import {useState} from "react";
 import "styled-components";
 import "../scss/layout/_tutorias.scss";
-import { PersonExclamation, Trash, PencilSquare } from "react-bootstrap-icons";
+import { PersonExclamation } from "react-bootstrap-icons";
 import { useLoaderData } from "react-router-dom";
 import SelectDocentes from "../components/SelectDocentes";
-import DataTable from "react-data-table-component";
 import TableTutorias from "../components/TableTutorias";
+import { toast } from "react-hot-toast";
 
 const URL_BACKEND_GET_TUTORIAS = "http://127.0.0.1:5000/tutoria/find_tutoria";
 const token = window.localStorage.getItem("token");
 
 export default function Tutorias() {
-  const docentes = useLoaderData();
-  const [tutoriaInfo, setTutoriaInfo] = React.useState([]);
+  const dataLoader = useLoaderData();
+  const [tutoriaInfo, setTutoriaInfo] = useState([]);
 
   const handleInputChange = async (event) => {
+    const toastId=toast.loading("Obteniendo tutorias...");
     const response = await fetch(
       `${URL_BACKEND_GET_TUTORIAS}/${event.target.value}`,
       {
@@ -29,11 +30,9 @@ export default function Tutorias() {
     } else {
       const data = await response.json();
       setTutoriaInfo(data.datos);
-      console.log(data);
+      toast.dismiss(toastId);
     }
   };
-
-  console.log(tutoriaInfo)
 
   return (
     <main className="wrapper_tutorias">
@@ -45,11 +44,11 @@ export default function Tutorias() {
       <section className="table">
         <div className="container_select-docentes">
           <SelectDocentes
-            data={docentes.datos}
+            data={dataLoader.docentes}
             handleInputChange={handleInputChange}
           />
         </div>
-        <TableTutorias data={tutoriaInfo} />
+        <TableTutorias data={tutoriaInfo} dataLoader={dataLoader}/>
       </section>
     </main>
   );

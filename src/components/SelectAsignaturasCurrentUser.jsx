@@ -1,13 +1,16 @@
 import React from "react";
 import { toast } from "react-hot-toast";
 
-export default function SelectAsignaturasCurrentUser({infoDocente,handleInputChange}) {
+export default function SelectAsignaturasCurrentUser({
+  dataAsignaturas,
+  handleInputChange,
+}) {
   const alertSelected = () => {
     toast.success("Asignatura seleccionada");
     document.getElementById("asignatura_id").disabled = true;
   };
 
-  console.log(infoDocente);
+  console.log(dataAsignaturas);
 
   return (
     <select
@@ -17,8 +20,10 @@ export default function SelectAsignaturasCurrentUser({infoDocente,handleInputCha
       onChangeCapture={alertSelected}
       required
     >
-      <option value="">Asignaturas del docente</option>
-      {infoDocente?.asignaturas?.map((asignatura, index) => (
+      <option value="" hidden>
+        Asignaturas del docente
+      </option>
+      {dataAsignaturas?.map((asignatura, index) => (
         <option value={asignatura.id} key={index}>
           {asignatura.nombre}
         </option>

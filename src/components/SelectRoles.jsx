@@ -3,8 +3,8 @@ import { toast } from "react-hot-toast";
 
 export default function SelectRoles({
   defaultValue,
-  setDataNewUser,
-  dataNewUser,
+  setFunction,
+  dataFunction,
 }) {
   function alertConfirm() {
     const selectedRol = document.getElementById("roles").value;
@@ -18,12 +18,13 @@ export default function SelectRoles({
   }
 
   function addRolToArray(selectedRol) {
-    setDataNewUser((prevState) => {
-      console.log(prevState);
-      const rol = prevState.rol.concat(selectedRol);
+    setFunction(prevState => {
+      const roles = prevState?.roles?.map(rol => rol?.toString());
+      console.log(roles);
+      roles.push(selectedRol);
       return {
         ...prevState,
-        rol,
+        roles
       };
     });
     toast.success("Rol asignado.", {
@@ -37,8 +38,8 @@ export default function SelectRoles({
       name="roles"
       id="roles"
       className="select_roles"
-      value={defaultValue?.rol}
-      disabled={dataNewUser?.rol?.length === 2 && true}
+      value={defaultValue?.roles}
+      disabled={dataFunction?.roles?.length === 2 && true}
       required
     >
       <option value="" hidden>
@@ -58,7 +59,7 @@ export default function SelectRoles({
         </>
       ) : (
         <>
-          {dataNewUser?.rol.length === 0 && (
+          {dataFunction?.roles?.length === 0 && (
             <>
               <option value="ROLE_ADMIN" onClick={alertConfirm}>
                 Administrador
@@ -71,17 +72,17 @@ export default function SelectRoles({
               </option>
             </>
           )}
-          {dataNewUser?.rol[0] === "ROLE_DOCENTE" && (
+          {dataFunction?.roles[0] === "ROLE_DOCENTE" && (
             <option value="ROLE_ADMIN" onClick={alertConfirm}>
               Administrador
             </option>
           )}
-          {dataNewUser?.rol[0] === "ROLE_ESTUDIANTE" && (
+          {dataFunction?.roles[0] === "ROLE_ESTUDIANTE" && (
             <option value="ROLE_ADMIN" onClick={alertConfirm}>
               Administrador
             </option>
           )}
-          {dataNewUser?.rol[0] === "ROLE_ADMIN" && (
+          {dataFunction?.roles[0] === "ROLE_ADMIN" && (
             <>
               <option value="ROLE_DOCENTE" onClick={alertConfirm}>
                 Docente

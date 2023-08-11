@@ -1,5 +1,4 @@
 import { toast } from "react-hot-toast";
-import useAuth from "../../hooks/useLocaleStorage";
 const URL_BACKEND_GET_TUTORIAS_BY_DAY_DOCENTE =
   "http://127.0.0.1:5000/tutoria/count_tutorias_day_by_docente";
 const URL_BACKEND_GET_TUTORIAS_BY_WEEK_DOCENTE =
@@ -79,7 +78,6 @@ async function getTutoriasByMonth(token, userInfo) {
 async function dashboardLoader(){
   const objStored = window.localStorage.getItem("userInfo");
   const userInfo = JSON.parse(objStored);
-  console.log(userInfo);
   let byMonth = 0;
   let byDay = 0;
   let byWeek = 0;

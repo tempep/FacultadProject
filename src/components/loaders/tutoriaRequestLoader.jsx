@@ -17,11 +17,22 @@ const getDocentes = async (token) => {
   } else {
     data = await response.json();
   }
-  return data;
+  return data.datos;
+};
+
+const isAdmin = (userInfo) => {
+  var arrayRoles = []; 
+  userInfo.roles.forEach((rol) => {
+    arrayRoles.push(rol.rol);
+  });
+  return arrayRoles.includes("ROLE_ADMIN");
 };
 
 export const tutoriaRequestLoader = async () => {
   const token = window.localStorage.getItem("token");
+  const objStored = window.localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(objStored);
   const docentes = await getDocentes(token);
-  return docentes
+  const isAdministrator = isAdmin(userInfo);
+  return {docentes, isAdministrator};
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../scss/layout/_edit-user.scss";
 import SelectUsuarios from "../components/SelectUsuarios";
 import { DataContext } from "../contexts/DataContext";
@@ -14,7 +14,7 @@ import {
   CardText,
   CardList,
   Fingerprint,
-  PersonBoundingBox
+  PersonBoundingBox,
 } from "react-bootstrap-icons";
 import SelectRoles from "../components/SelectRoles";
 import SelectCarreras from "../components/SelectCarreras";
@@ -24,17 +24,19 @@ import Swal from "sweetalert2";
 const MySwal = withReactContent(Swal);
 
 const token = window.localStorage.getItem("token");
-const URL_BACKEND_UPDATE_USER = "http://localhost:5000/admin/actualizarUsuario";
+const URL_BACKEND_UPDATE_USER = "http://127.0.0.1:5000/usuario/update_usuario";
+const URL_BACKEND_DELETE_USER = "http://127.0.0.1:5000/usuario/delete_usuario";
 
 export default function EditUser() {
-  const users = useLoaderData();
-  const {dataUser, setDataUser}=React.useContext(DataContext);
+  const { users, carreras, asignaturas } = useLoaderData();
+  const { dataUser, setDataUser } = React.useContext(DataContext);
+  const [userSelected, setUserSelected] = useState("");
 
   console.log(users);
 
   async function fetchingData() {
-    const toastId = toast.loading("Creando usuario...");
-    fetch(URL_BACKEND_UPDATE_USER, {
+    const toastId = toast.loading("Editando información del usuario...");
+    fetch(`${URL_BACKEND_UPDATE_USER}/${userSelected}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -49,7 +51,8 @@ export default function EditUser() {
           throw new Error(data.message);
         } else {
           toast.dismiss(toastId);
-          toast.success("Usuario creado exitosamente!");
+          toast.success("Usuario modificado correctamente!");
+          window.location.reload();
         }
       })
       .catch((err) => {
@@ -67,7 +70,7 @@ export default function EditUser() {
       cancelButtonText: "Cancelar",
       confirmButtonText: "Aceptar",
       title: "Pregunta",
-      text: "¿Desea crear el usuario?",
+      text: "¿Está seguro de editar el usuario?",
       icon: "question",
       showDenyButton: true,
       showConfirmButton: true,
@@ -81,15 +84,15 @@ export default function EditUser() {
     }
   }
 
-  /* const isStudent = () => {
-    const res = dataNewUser.rol.includes("ROLE_ESTUDIANTE");
+  const isStudent = () => {
+    const res = dataUser?.roles?.includes("ROLE_ESTUDIANTE");
     return res;
   };
 
   const isTeacher = () => {
-    const res = dataNewUser.rol.includes("ROLE_DOCENTE");
+    const res = dataUser?.roles?.includes("ROLE_DOCENTE");
     return res;
-  }; */
+  };
 
   console.log(dataUser);
 
@@ -103,6 +106,37 @@ export default function EditUser() {
     });
   }
 
+  const handleDelete = async (user) => {
+    if (!user) {
+      toast.error("Debe seleccionar un usuario");
+    } else {
+      await MySwal.fire({
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Aceptar",
+        title: "Pregunta",
+        text: "¿Está seguro de eliminar el usuario?",
+        icon: "question",
+        showDenyButton: true,
+        showConfirmButton: true,
+      }).then((confirm) => confirm.isConfirmed && fetchDelete());
+    }
+
+    const fetchDelete = async () => {
+      const toastId = toast.loading("Eliminando usuario...");
+      const response = await fetch(`${URL_BACKEND_DELETE_USER}/${user}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok)
+        toast.success("Usuario eliminado!", { id: toastId, duration: 3000 });
+      setInterval(() => {
+        window.location.reload();
+      }, 2000);
+    };
+  };
+
   return (
     <main className="wrapper_edit-user">
       <section className="title">
@@ -111,8 +145,8 @@ export default function EditUser() {
       </section>
       <section className="container_select-form">
         <div className="container_select-icon">
-          <PersonBoundingBox size={60} color="yellow"/>
-        <SelectUsuarios setFunction={setDataUser} />
+          <PersonBoundingBox size={60} color="yellow" />
+          <SelectUsuarios setFunction={setUserSelected} />
         </div>
         <form onSubmit={handleSubmit} id="formEditUser">
           <div className="row1">
@@ -198,40 +232,46 @@ export default function EditUser() {
               </select>
             </div>
             <div className="container_roles">
-            <i className="icon">
-            <Fingerprint size={25} />
-            </i>
-            <SelectRoles
-            defaultValue={dataUser.roles}
-            setDataNewUser={setDataUser}
-            dataNewUser={dataUser}
-            />
+              <i className="icon">
+                <Fingerprint size={25} />
+              </i>
+              <SelectRoles
+                defaultValue={dataUser.roles}
+                setFunction={setDataUser}
+                dataNewUser={dataUser}
+              />
+            </div>
           </div>
-          </div>
-          {/* <div className="row5">
-          {isStudent() && (
-            <SelectCarreras
-            handleInputChange={handleInputChange}
-            data={dataLoaded.carreras}
-            />
+          <div className="row5">
+            {isStudent() && (
+              <SelectCarreras
+                handleInputChange={handleInputChange}
+                data={carreras}
+              />
             )}
             {isTeacher() && (
               <>
-              <SelectAsignaturas
-              data={dataLoaded.asignaturas}
-              setDataNewUser={setDataNewUser}
-                dataNewUser={dataNewUser}
+                <SelectAsignaturas
+                  data={asignaturas}
+                  setFunction={setDataUser}
+                  dataFunction={dataUser}
                 />
                 <SelectCarreras
-                isTeacher={isTeacher()}
-                handleInputChange={handleInputChange}
-                data={dataLoaded.carreras}
+                  isTeacher={isTeacher()}
+                  handleInputChange={handleInputChange}
+                  data={carreras}
                 />
-                </>
-                )}
-              </div> */}
-          <button id="btnSubmit">Aceptar</button>
+              </>
+            )}
+          </div>
+          <button id="btnSubmit" onClick={handleSubmit}>
+            Aceptar
+          </button>
         </form>
+
+        <button id="btnDelete" onClick={() => handleDelete(userSelected)}>
+          Eliminar
+        </button>
       </section>
     </main>
   );

@@ -1,0 +1,18 @@
+/*Variables*/
+@use "../abstracts/variables" as *;
+
+/*Components*/
+@use "../components/mixins" as *;
+
+main.wrapper_dashboard{
+    height: 100vh;
+    background-color: $primary-color;
+    overflow: hidden;
+    display: flex;  
+    margin-left: 15%;
+    justify-content: center;
+
+    & div.container_dashboard{
+        width: 30%;
+    }
+}

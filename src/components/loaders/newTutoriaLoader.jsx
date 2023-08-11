@@ -16,7 +16,7 @@ const getDocentes = async (token) => {
   } else {
     data = await response.json();
   }
-  return data;
+  return data.datos;
 };
 
 const isAdmin = (userInfo) => {

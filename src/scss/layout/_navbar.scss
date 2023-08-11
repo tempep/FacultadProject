@@ -18,8 +18,11 @@
     .sidebar_title {
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        gap: 10px;
 
         h2 {
+            align-self: center;
             padding: 10px;
             background-color: $primary-color;
             color: $white-color;
@@ -31,6 +34,12 @@
                 box-shadow: 4px 8px white;
                 cursor: pointer;
             }
+        }
+
+        p{
+            margin: 5px;
+            display: flex;
+            gap: 10px;
         }
     }
 

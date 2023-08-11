@@ -1,4 +1,3 @@
-import React from "react";
 
 const URL_BACKEND_USER_INFORMATION = "http://127.0.0.1:5000/usuario/user_information";
 

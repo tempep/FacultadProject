@@ -1,25 +1,22 @@
-import React from "react";
+import { useState } from "react";
 import "../scss/layout/_new-tutoria.scss";
 import { toast } from "react-hot-toast";
-import { Calendar2CheckFill, PersonBadge, Plus } from "react-bootstrap-icons";
+import { Calendar2CheckFill, Plus } from "react-bootstrap-icons";
 import ListAddedStudents from "../components/ListAddedStudents";
 import SuggestedStudents from "../components/SuggestedStudents";
 import SelectAsignaturasCurrentUser from "../components/SelectAsignaturasCurrentUser";
 import SelectDocentesTutorias from "../components/SelectDocentesTutorias";
 import { useLoaderData } from "react-router-dom";
-import { DataContext } from "../contexts/DataContext";
-import RequiredAuth from "../components/RequiredAuth";
+import useLocaleStorage from "../hooks/useLocaleStorage"
 
 const URL_BACKEND_NEWTUTORIA = "http://127.0.0.1:5000/tutoria/create_tutoria";
 
 export default function NewTutoria() {
-  const { dataDocente } = React.useContext(DataContext);
-  const [infoDocente, setInfoDocente]=React.useState({});
-  const dataLoader = useLoaderData();
+  const [infoDocente, setInfoDocente]=useState({});
+  const {isAdministrator, docentes} = useLoaderData();
   const token = window.localStorage.getItem("token");
-  const objStored = window.localStorage.getItem("userInfo");
-  const userInfo = JSON.parse(objStored);
-  const [newTutoria, setNewTutoria] = React.useState({
+  const userInfo = useLocaleStorage();
+  const [newTutoria, setNewTutoria] = useState({
     docente_id: userInfo.numero_identificacion,
     fecha: "",
     hora_inicio: "",
@@ -30,7 +27,7 @@ export default function NewTutoria() {
     tema_desarrollar: "",
   });
 
-  console.log();
+  console.log(userInfo.asignaturas);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -176,17 +173,17 @@ export default function NewTutoria() {
                 <Plus size={20} color="green"/>
               </button>
           </div>
-          {dataLoader.isAdministrator ? (
+          {isAdministrator ? (
             <>
               <div className="row3">
                 <SelectDocentesTutorias
-                  data={dataLoader.docentes.datos}
+                  data={docentes}
                   setInfoDocente={setInfoDocente}
                 />
               </div>
               <div className="row4">
                 <SelectAsignaturasCurrentUser
-                  infoDocente={infoDocente}
+                  dataAsignaturas={userInfo.asignaturas}
                   handleInputChange={handleInputChange}
                 />
                 <div className="container_input-text">
@@ -204,7 +201,7 @@ export default function NewTutoria() {
           ) : (
             <div className="row4">
               <SelectAsignaturasCurrentUser
-                infoDocente={infoDocente}
+                dataAsignaturas={userInfo.asignaturas}
                 handleInputChange={handleInputChange}
               />
               <div className="">

@@ -9,7 +9,7 @@ const URL_BACKEND_SOLICITAR = "http://127.0.0.1:5000/solicitud/hacer_solicitud";
 const token = window.localStorage.getItem("token");
 
 export default function TutoriaRequest() {
-  const docentes = useLoaderData();
+  const {docentes} = useLoaderData();
   const userInfo = window.localStorage.getItem("userInfo");
   const userInfoParsed = JSON.parse(userInfo);
   const [dataRequest, setDataRequest] = React.useState({
@@ -73,7 +73,7 @@ export default function TutoriaRequest() {
         <h2>Información de la solicitud</h2>
         <div className="row1">
           <SelectDocentes
-            data={docentes.datos}
+            data={docentes}
             handleInputChange={handleInputChange}
           />
         </div>

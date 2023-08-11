@@ -1,10 +1,10 @@
-import React from "react";
+import "../scss/layout/_dashboard.scss";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useLoaderData } from "react-router-dom";
 
 export default function Dashboard() {
-  const {byDay, byWeek, byMonth}=useLoaderData();
+  const { byDay, byWeek, byMonth } = useLoaderData();
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const data = {
@@ -19,16 +19,15 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="grid grid-cols-2 justify-center items-center bg-dark-blue h-screen overflow-hidden">
-      <h1 className="text-5xl text-white text-center">Dashboard</h1>
-      <section className="flex flex-col">
+    <main className="wrapper_dashboard">
+      <div className="container_dashboard">
         <Doughnut
           data={data}
           width={500}
           height={250}
           options={{ maintainAspectRatio: false }}
         />
-      </section>
+      </div>
     </main>
   );
 }

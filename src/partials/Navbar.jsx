@@ -15,8 +15,7 @@ import {
 import useLocaleStorage from "../hooks/useLocaleStorage";
 
 export default function MyNavbar() {
-  const userInfo=useLocaleStorage();
-  console.log(userInfo);
+  const userInfo = useLocaleStorage();
   const linksForRole = () => {
     let linksRoutes = [];
     if (isAdmin()) {
@@ -45,7 +44,12 @@ export default function MyNavbar() {
           href: "/my/tutorias",
           label: "Tutorias",
           icon: <PersonFillExclamation size={25} />,
-        }
+        },
+        /* {
+          href: "/my",
+          label: "Gráficas",
+          icon: <GraphUp size={25} />,
+        } */
       );
       return linksRoutes;
     } else if (isTeacher()) {
@@ -59,7 +63,12 @@ export default function MyNavbar() {
           href: "/my/tutorias",
           label: "Tutorias",
           icon: <PersonFillExclamation size={25} />,
-        }
+        },
+        /* {
+          href: "/my",
+          label: "Gráficas",
+          icon: <GraphUp size={25} />,
+        } */
       );
       return linksRoutes;
     } else {
@@ -72,28 +81,35 @@ export default function MyNavbar() {
     }
   };
 
-
   const isTeacher = () => {
     var arrayRoles = [];
     userInfo.roles.forEach((rol) => {
-      arrayRoles.push(rol.rol);
+      arrayRoles.push(rol);
     });
-    const res = arrayRoles.includes("ROLE_DOCENTE");
-    return res;
+    return arrayRoles.includes("ROLE_DOCENTE");
   };
 
   const isAdmin = () => {
     var arrayRoles = [];
     userInfo.roles.forEach((rol) => {
-      arrayRoles.push(rol.rol);
+      arrayRoles.push(rol);
     });
     return arrayRoles.includes("ROLE_ADMIN");
   };
+
+  console.log(isAdmin());
+  console.log(isTeacher());
 
   return (
     <aside className="sidebar">
       <div className="sidebar_title">
         <h2>Facultad Project</h2>
+        <p>
+          <i>
+            <PersonFill size={25} />
+          </i>
+          {userInfo.nombre}
+        </p>
       </div>
       <ul className="link_list">
         {linksForRole().map((link) => (

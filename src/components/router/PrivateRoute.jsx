@@ -9,8 +9,6 @@ export default function PrivateRoute({ allowedRoles }) {
   const { isAuthenticated } = useAuthContext();
   const userInfo = useLocaleStorage();
 
-  console.log(allowedRoles);
-
   return isAuthenticated ? (
     <>
       <Navbar />

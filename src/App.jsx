@@ -18,7 +18,6 @@ import {
   NEWTUTORIA,
   EDITUSER,
   CREARCUENTA,
-  DASHBOARD,
   VALIDATIONPRIVATE
 } from "./config/routes/paths";
 import { AuthContextProvider } from "./contexts/AuthContext";
@@ -41,8 +40,6 @@ import Dashboard from "./pages/Dashboard";
 import { tutoriaRequestLoader } from "./components/loaders/tutoriaRequestLoader";
 import dashboardLoader from "./components/loaders/dashboardLoader";
 import { newTutoriaLoader } from "./components/loaders/newTutoriaLoader";
-import RequiredAuth from "./components/RequiredAuth";
-
 
 
 const router = createBrowserRouter([

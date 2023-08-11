@@ -95,12 +95,30 @@
                 }
             }
 
-            button#btnSubmit {
+            & .row5{
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                justify-content: center;
+                align-content: center;
+
+                & div.container_input_search {
+                    display: flex;
+                }
+            }
+        }
+
+             button#btnSubmit {
                 @include button-style-primary($primary-bright-color, $primary-bright-color);
                 width: 50%;
                 justify-self: center;
             }
+            
+             button#btnDelete{
+                @include button-style-primary(#c51f1f, #f40707);
+                width: 20%;
+                justify-self: center;
+            }
 
-        }
     }
 }
